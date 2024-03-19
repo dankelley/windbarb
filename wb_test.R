@@ -1,8 +1,8 @@
-# Load the barb-drawing code. This is wrapped in
-# a test, to avoid reloading it over and over, during
-# testing/developing work.  Eventually something like
-# this could go into the oce package, in which case
-# just using library(oce) will suffice.
+# Load the barb-drawing code.  This is *only* a provisional
+# version of the mapDirectionFieldBarbs() function; the plan
+# is for it to be called from oce::mapDirectionField(). The
+# latter function will need a new parameter, though, to dictate
+# what I am presently calling 'step' (a name I don't like).
 source("wb.R")
 
 # Step 1: create fake wind data
