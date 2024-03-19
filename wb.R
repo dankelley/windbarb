@@ -174,6 +174,8 @@ mapDirectionFieldBarbs <- function(
     longitude, latitude, u, v,
     length = 1, step = 10, col = par("fg"), lwd = par("lwd"),
     debug = FALSE, ...) {
+    # Permit longitude and latitude to be vectors, while both
+    # u and v are corresponding matrices.
     if (is.matrix(u)) {
         if (is.vector(longitude) && is.vector(latitude)) {
             nlon <- length(longitude)
@@ -182,10 +184,16 @@ mapDirectionFieldBarbs <- function(
             latitude <- matrix(rep(latitude, nlon), byrow = TRUE, nrow = nlon)
         }
     }
+    # Ensure that everything is a vector, because that is what
+    # windBarbs() uses.
     longitude <- oce:::angleShift(longitude)
     latitude <- oce:::angleShift(latitude)
+    longitude <- as.vector(longitude)
+    latitude <- as.vector(latitude)
+    u <- as.vector(u)
+    v <- as.vector(v)
     windBarbs(longitude, latitude,
-        u = as.vector(u), v = as.vector(v),
+        u = u, v = v,
         length = length, step = step, debug = debug, col = col, lwd = lwd
     )
 }
