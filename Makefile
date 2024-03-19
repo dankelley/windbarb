@@ -5,5 +5,4 @@ all: FORCE
 clean: FORCE
 	-rm -f *.out
 	-rm -f *.png
-	-rm -f *.md
 FORCE:
