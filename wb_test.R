@@ -3,9 +3,7 @@
 # testing/developing work.  Eventually something like
 # this could go into the oce package, in which case
 # just using library(oce) will suffice.
-if (!exists("mapDirectionFieldBarbs")) {
-    source("wb.R")
-}
+source("wb.R")
 
 # Step 1: create fake wind data
 lon <- seq(-120, -60, 15)
