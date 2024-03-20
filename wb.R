@@ -72,8 +72,7 @@ windBarbs <- function(longitude, latitude, u, v,
     x1 <- x0 + lengthXY * Cpage
     y1 <- y0 + lengthXY * Spage
     notStill <- speed != 0
-    points(x0[notStill], y0[notStill])
-    #points(x1[notStill], y1[notStill], pch=2)
+    #points(x0[notStill], y0[notStill])
     segments(x0[notStill], y0[notStill], x1[notStill], y1[notStill], col = barbCol, lwd = barbLwd)
     f <- feathers(speed, step = step, debug = debug)
     angleBarb <- thetaPage - phi
