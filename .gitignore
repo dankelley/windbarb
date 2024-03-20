@@ -1,2 +1,4 @@
 *.md
 *.png
+.DS_Store
+*~
