@@ -24,4 +24,3 @@ mapDirectionFieldBarbs(lons, lats,
     code = 2, col = "blue"
 )
 if (!interactive()) dev.off()
-

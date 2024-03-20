@@ -41,7 +41,6 @@ windBarbs <- function(longitude, latitude, u, v,
     x1 <- xy1$x
     y1 <- xy1$y
     thetaPage <- 180 / pi * atan2(y1 - y0, x1 - x0)
-    met <- TRUE # set TRUE for barbs pointing to wind source
     phi <- 70 # degrees to rotate barbs (70 by eye)
     barbLwd <- lwd
     barbCol <- col
@@ -65,14 +64,18 @@ windBarbs <- function(longitude, latitude, u, v,
     speed <- 5L * as.integer(round(speed / 5))
     Spage <- sinpi(thetaPage / 180)
     Cpage <- cospi(thetaPage / 180)
-    cat(sprintf("  lat0=%.1f lat1=%.1f\n", lat0, lat1))
-    cat(sprintf("  lon0=%.1f lon1=%.1f\n", lon0, lon1))
-    cat(sprintf("  theta=%.0f thetaPage=%.0f Spage=%.0f Cpage=%.0f lengthXY=%.0f\n",
-        theta, thetaPage, Spage, Cpage, lengthXY))
+    if (debug) {
+        cat(sprintf("  lat0=%.1f lat1=%.1f\n", lat0, lat1))
+        cat(sprintf("  lon0=%.1f lon1=%.1f\n", lon0, lon1))
+        cat(sprintf(
+            "  theta=%.0f thetaPage=%.0f Spage=%.0f Cpage=%.0f lengthXY=%.0f\n",
+            theta, thetaPage, Spage, Cpage, lengthXY
+        ))
+    }
     x1 <- x0 + lengthXY * Cpage
     y1 <- y0 + lengthXY * Spage
     notStill <- speed != 0
-    #points(x0[notStill], y0[notStill])
+    # points(x0[notStill], y0[notStill])
     segments(x0[notStill], y0[notStill], x1[notStill], y1[notStill], col = barbCol, lwd = barbLwd)
     f <- feathers(speed, step = step, debug = debug)
     angleBarb <- thetaPage - phi
