@@ -1,7 +1,8 @@
+# code as issue02c.R but with u set to NA for the northeast point
 library(oce)
 source("wb.R")
 data(coastlineWorld)
-if (!interactive()) png("issue02c.png", width = 7, height = 7, unit = "in", res = 200)
+if (!interactive()) png("issue04.png", width = 7, height = 7, unit = "in", res = 200)
 par(mar = rep(2, 4))
 mapPlot(coastlineWorld,
     border = "black",
@@ -80,9 +81,9 @@ mapDirectionFieldBarbs(lon - dlon, lat + dlat, u = 0, v = U, scale = 1.5, col = 
 
 mapPoints(lon + dlon, lat + dlat)
 mapDirectionField(lon + dlon, lat + dlat,
-    u = 0, v = U, scale = .1,
+    u = NA, v = U, scale = .1,
     length = .08, code = 2, col = 2
 )
-mapDirectionFieldBarbs(lon + dlon, lat + dlat, u = 0, v = U, scale = 1.5, col = 4)
+mapDirectionFieldBarbs(lon + dlon, lat + dlat, u = NA, v = U, scale = 1.5, col = 4)
 
 if (!interactive()) dev.off()

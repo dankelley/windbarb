@@ -19,9 +19,9 @@ feathers <- function(u, step = 10, debug = FALSE) {
 }
 
 windBarbs <- function(longitude, latitude, u, v,
-                      length = 5, step = 10, lwd = 1, col = 1,
+                      scale = 5, step = 10, lwd = 1, col = 1,
                       round10 = FALSE, debug = FALSE) {
-    lengthXY <- length * 111e3 # per metre
+    scaleXY <- scale * 111e3 # per metre
     lon0 <- longitude
     lat0 <- latitude
     theta <- 180 / pi * atan2(v, u)
@@ -32,8 +32,8 @@ windBarbs <- function(longitude, latitude, u, v,
     }
     S <- sinpi(theta / 180)
     C <- cospi(theta / 180)
-    lat1 <- lat0 - S * length
-    lon1 <- lon0 - C * length / cospi(lat0 / 180)
+    lat1 <- lat0 - S * scale
+    lon1 <- lon0 - C * scale / cospi(lat0 / 180)
     xy0 <- lonlat2map(as.vector(lon0), as.vector(lat0))
     x0 <- xy0$x
     y0 <- xy0$y
@@ -45,7 +45,7 @@ windBarbs <- function(longitude, latitude, u, v,
     barbLwd <- lwd
     barbCol <- col
     flagCol <- col
-    barbLength <- 0.2 * lengthXY
+    barbLength <- 0.2 * scaleXY
     # D <- 0.11 # barb separation (Used??)
     triangleWidth <- 2 * barbLength * cospi(phi / 180)
     triangleLength <- 0.5 * triangleWidth / cospi(phi / 180) # or sin?
@@ -53,8 +53,8 @@ windBarbs <- function(longitude, latitude, u, v,
     ds <- 0.2 * cospi(phi / 180)
     if (debug) {
         cat(sprintf(
-            "length: %.4f, barbLength: %.4f, barbSpace: %.4f, triangleWidth: %.4f\ntriangleLength: %.4f\n",
-            length, barbLength, barbSpace, triangleWidth, triangleLength
+            "scale: %.4f, barbLength: %.4f, barbSpace: %.4f, triangleWidth: %.4f\ntriangleLength: %.4f\n",
+            scale, barbLength, barbSpace, triangleWidth, triangleLength
         ))
     }
     knots <- TRUE
@@ -68,12 +68,12 @@ windBarbs <- function(longitude, latitude, u, v,
         cat(sprintf("  lat0=%.1f lat1=%.1f\n", lat0, lat1))
         cat(sprintf("  lon0=%.1f lon1=%.1f\n", lon0, lon1))
         cat(sprintf(
-            "  theta=%.0f thetaPage=%.0f Spage=%.0f Cpage=%.0f lengthXY=%.0f\n",
-            theta, thetaPage, Spage, Cpage, lengthXY
+            "  theta=%.0f thetaPage=%.0f Spage=%.0f Cpage=%.0f scaleXY=%.0f\n",
+            theta, thetaPage, Spage, Cpage, scaleXY
         ))
     }
-    x1 <- x0 + lengthXY * Cpage
-    y1 <- y0 + lengthXY * Spage
+    x1 <- x0 + scaleXY * Cpage
+    y1 <- y0 + scaleXY * Spage
     notStill <- speed != 0
     # points(x0[notStill], y0[notStill])
     segments(x0[notStill], y0[notStill], x1[notStill], y1[notStill], col = barbCol, lwd = barbLwd)
@@ -149,8 +149,8 @@ windBarbs <- function(longitude, latitude, u, v,
                     if (debug) {
                         cat(
                             sprintf(
-                                "delta=%.3f s=%.3f thetaPage=%.3f length=%.3f triangleWidth=%.4f triangleLength=%.4f\n",
-                                delta, s, thetaPage, length, triangleWidth, triangleLength
+                                "delta=%.3f s=%.3f thetaPage=%.3f scale=%.3f triangleWidth=%.4f triangleLength=%.4f\n",
+                                delta, s, thetaPage, scale, triangleWidth, triangleLength
                             )
                         )
                     }
@@ -176,7 +176,7 @@ windBarbs <- function(longitude, latitude, u, v,
 # sibling functions, etc.
 mapDirectionFieldBarbs <- function(
     longitude, latitude, u, v,
-    length = 1, step = 10, col = par("fg"), lwd = par("lwd"),
+    scale = 1, step = 10, col = par("fg"), lwd = par("lwd"),
     debug = FALSE, ...) {
     # Check (and flatten location and velocity parameters)
     if (!is.vector(longitude)) {
@@ -209,8 +209,9 @@ mapDirectionFieldBarbs <- function(
     }
     longitude <- oce:::angleShift(longitude)
     latitude <- oce:::angleShift(latitude)
-    windBarbs(longitude, latitude,
-        u = u, v = v,
-        length = length, step = step, debug = debug, col = col, lwd = lwd
+    ok <- is.finite(u) & is.finite(v)
+    windBarbs(longitude[ok], latitude[ok],
+        u = u[ok], v = v[ok],
+        scale = scale, step = step, debug = debug, col = col, lwd = lwd
     )
 }

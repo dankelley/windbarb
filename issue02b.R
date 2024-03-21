@@ -2,7 +2,7 @@ library(oce)
 source("wb.R")
 load("exwindbarb.RData")
 data(coastlineWorld)
-if (!interactive()) png("issue02b.png")
+if (!interactive()) png("issue02b.png", width = 7, height = 7, unit = "in", res = 200)
 mapPlot(coastlineWorld,
     border = "black",
     col = "grey95",
@@ -15,10 +15,7 @@ u <- 13.53003
 v <- 19.93275
 mapDirectionField(lon, lat,
     u = u, v = v, scale = .1,
-    length = .08, code = 2, col = "red"
+    length = .08, code = 2, col = 2
 )
-mapDirectionFieldBarbs(lon, lat,
-    u = u, v = v, length = 3,
-    code = 2, col = "blue"
-)
+mapDirectionFieldBarbs(lon, lat, u = u, v = v, scale = 1.5, col = 4)
 if (!interactive()) dev.off()
