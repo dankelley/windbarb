@@ -7,8 +7,8 @@ par(mar = rep(2, 4))
 mapPlot(coastlineWorld,
     border = "black",
     col = "grey95",
-    projection = "+proj=lcc +lat_1=55 +lat_2=65 +lon_0=-105",
-    longitudelim = c(-120, -90), latitudelim = c(50, 70)
+    projection = "+proj=lcc +lat_1=60 +lat_2=65 +lon_0=-115",
+    longitudelim = c(-140, -90), latitudelim = c(55, 70)
 )
 lon <- -110
 lat <- 60

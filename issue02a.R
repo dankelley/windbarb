@@ -10,6 +10,10 @@ mapPlot(coastlineWorld,
     longitudelim = c(-140, -90), latitudelim = c(57, 70)
 )
 
+str(lons)
+str(lats)
+str(u)
+nrow(u)
 mapDirectionField(lons, lats,
     u = u,
     v = v,

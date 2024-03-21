@@ -6,8 +6,8 @@ if (!interactive()) png("issue02b.png")
 mapPlot(coastlineWorld,
     border = "black",
     col = "grey95",
-    projection = "+proj=lcc +lat_0=63 +lat_1=33 +lat_2=45 +lon_0=-110",
-    longitudelim = c(-140, -90), latitudelim = c(57, 70)
+    projection = "+proj=lcc +lat_1=60 +lat_2=65 +lon_0=-115",
+    longitudelim = c(-140, -90), latitudelim = c(55, 70)
 )
 lon <- -111.95
 lat <- 63.95

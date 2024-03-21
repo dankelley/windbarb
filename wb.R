@@ -178,24 +178,37 @@ mapDirectionFieldBarbs <- function(
     longitude, latitude, u, v,
     length = 1, step = 10, col = par("fg"), lwd = par("lwd"),
     debug = FALSE, ...) {
-    # Permit longitude and latitude to be vectors, while both
-    # u and v are corresponding matrices.
-    if (is.matrix(u)) {
-        if (is.vector(longitude) && is.vector(latitude)) {
-            nlon <- length(longitude)
-            nlat <- length(latitude)
-            longitude <- matrix(rep(longitude, nlat), nrow = nlon)
-            latitude <- matrix(rep(latitude, nlon), byrow = TRUE, nrow = nlon)
-        }
+    # Check (and flatten location and velocity parameters)
+    if (!is.vector(longitude)) {
+        stop("longitude must be a vector")
     }
-    # Ensure that everything is a vector, because that is what
-    # windBarbs() uses.
+    if (!is.vector(latitude)) {
+        stop("latitude must be a vector")
+    }
+    if (is.matrix(u) || is.matrix(v)) {
+        if (!is.matrix(u) || !is.matrix(v)) {
+            stop("if either of u or v is a matrix, then both must be")
+        }
+        if (!identical(dim(u), dim(v))) {
+            stop("u and v must have identical dimensions")
+        }
+        nlon <- length(longitude)
+        nlat <- length(latitude)
+        if (nlon != nrow(u)) {
+            stop("length of longitude must match number of rows in u")
+        }
+        if (nlat != ncol(u)) {
+            stop("length of latitude must match number of columns in u")
+        }
+        longitude <- matrix(rep(longitude, nlat), nrow = nlon)
+        latitude <- matrix(rep(latitude, nlon), byrow = TRUE, nrow = nlon)
+        longitude <- as.vector(longitude)
+        latitude <- as.vector(latitude)
+        u <- as.vector(u)
+        v <- as.vector(v)
+    }
     longitude <- oce:::angleShift(longitude)
     latitude <- oce:::angleShift(latitude)
-    longitude <- as.vector(longitude)
-    latitude <- as.vector(latitude)
-    u <- as.vector(u)
-    v <- as.vector(v)
     windBarbs(longitude, latitude,
         u = u, v = v,
         length = length, step = step, debug = debug, col = col, lwd = lwd
