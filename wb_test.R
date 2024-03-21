@@ -35,7 +35,11 @@ mapPlot(coastlineWorld,
 )
 
 # Step 3: add wind barbs (using debug=TRUE to show speeds)
-mapDirectionFieldBarbs(lon[l], lat[l], u[l], v[l], scale = 5, debug = TRUE)
+mapDirectionFieldBarbs(lon[l], lat[l], u[l], v[l],
+    scale = 5, length=0.2)
+
+
+
 
 if (!interactive()) {
     dev.off()

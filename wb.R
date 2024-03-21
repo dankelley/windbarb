@@ -19,7 +19,7 @@ feathers <- function(u, step = 10, debug = FALSE) {
 }
 
 windBarbs <- function(longitude, latitude, u, v,
-                      scale = 5, step = 10, lwd = 1, col = 1,
+                      scale = 5, length = 0.2, step = 10, lwd = 1, col = 1,
                       round10 = FALSE, debug = FALSE) {
     scaleXY <- scale * 111e3 # per metre
     lon0 <- longitude
@@ -45,12 +45,12 @@ windBarbs <- function(longitude, latitude, u, v,
     barbLwd <- lwd
     barbCol <- col
     flagCol <- col
-    barbLength <- 0.2 * scaleXY
-    # D <- 0.11 # barb separation (Used??)
+    D <- length
+    barbLength <- D * scaleXY
     triangleWidth <- 2 * barbLength * cospi(phi / 180)
     triangleLength <- 0.5 * triangleWidth / cospi(phi / 180) # or sin?
     barbSpace <- barbLength * cospi(phi / 180)
-    ds <- 0.2 * cospi(phi / 180)
+    ds <- D * cospi(phi / 180)
     if (debug) {
         cat(sprintf(
             "scale: %.4f, barbLength: %.4f, barbSpace: %.4f, triangleWidth: %.4f\ntriangleLength: %.4f\n",
@@ -176,7 +176,7 @@ windBarbs <- function(longitude, latitude, u, v,
 # sibling functions, etc.
 mapDirectionFieldBarbs <- function(
     longitude, latitude, u, v,
-    scale = 1, step = 10, col = par("fg"), lwd = par("lwd"),
+    scale = 1, length = 0.2, step = 10, col = par("fg"), lwd = par("lwd"),
     debug = FALSE, ...) {
     # Check (and flatten location and velocity parameters)
     if (!is.vector(longitude)) {
@@ -212,6 +212,6 @@ mapDirectionFieldBarbs <- function(
     ok <- is.finite(u) & is.finite(v)
     windBarbs(longitude[ok], latitude[ok],
         u = u[ok], v = v[ok],
-        scale = scale, step = step, debug = debug, col = col, lwd = lwd
+        scale = scale, length = length, step = step, debug = debug, col = col, lwd = lwd
     )
 }
