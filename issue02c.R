@@ -7,8 +7,8 @@ par(mar = rep(2, 4))
 mapPlot(coastlineWorld,
     border = "black",
     col = "grey95",
-    projection = "+proj=lcc +lat_0=63 +lat_1=33 +lat_2=45 +lon_0=-110",
-    longitudelim = c(-140, -90), latitudelim = c(57, 70)
+    projection = "+proj=lcc +lat_1=55 +lat_2=65 +lon_0=-105",
+    longitudelim = c(-120, -90), latitudelim = c(50, 70)
 )
 lon <- -110
 lat <- 60
@@ -16,8 +16,8 @@ u <- 15
 v <- 15
 U <- sqrt(u^2 + v^2)
 
-dlat <- 4
-dlon <- 8
+dlat <- 5
+dlon <- 10
 
 cat(sprintf("Flow to northeast (u=%.0f v=%.0f)\n", u, v))
 
